@@ -79,7 +79,9 @@ namespace ProjetCsWpf
                             : Sudoku.Content[i][j].Hypotheses.Select(c => c.ToString()).Aggregate((s, c) => s + ", " + c),
                         TextAlignment = TextAlignment.Center,
                         Foreground = Sudoku.IsValid
-                                        ? Brushes.Black
+                                        ? Sudoku.Resolved
+                                            ? Brushes.Blue
+                                            : Brushes.Black
                                         : Brushes.Red
                     };
                     Grid.SetColumn(text, j);
@@ -118,6 +120,30 @@ namespace ProjetCsWpf
             if (App.SudokuManager.SelectedSudoku == null) return;
             Debug.WriteLine("__interaction__");
             App.SudokuManager.SelectedSudoku.TrouverInteraction();
+            DisplayGrid();
+        }
+
+        private void Btn_Trouver_GroupeIsole_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.SudokuManager.SelectedSudoku == null) return;
+            Debug.WriteLine("__interaction__");
+            App.SudokuManager.SelectedSudoku.GroupeIsoles();
+            DisplayGrid();
+        }
+
+        private void BtnResoleAll_OnCLick(object sender, RoutedEventArgs e)
+        {
+            foreach (var sudoku in App.SudokuManager.Sudokus)
+            {
+                sudoku.Resolve();
+            }
+        }
+
+        private void Btn_Burma_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.SudokuManager.SelectedSudoku == null) return;
+            Debug.WriteLine("__bruma__");
+            App.SudokuManager.SelectedSudoku.Burma();
             DisplayGrid();
         }
     }

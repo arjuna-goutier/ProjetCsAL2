@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Forms.VisualStyles;
 
 namespace ProjetCsWpf
 {
@@ -113,10 +114,13 @@ namespace ProjetCsWpf
         }
 
         public void Resolve() {
-            while (!Resolved) {
+//            while (!Resolved) {
                 PropagerCertitudes();
                 RetirerCandidatsUniques();
-            }
+                TrouverJumeaux();
+                TrouverInteraction();
+                GroupeIsoles();
+            //          }
         }
         
         // pour les valeures déja trouvées, on retires les valeures dans les lignes colones region corespondantes
@@ -267,7 +271,7 @@ namespace ProjetCsWpf
                 Debug.WriteLine("value : " + value);
                 foreach (var areaRow in AreaLines)
                 {
-                    for (var i = 0; i < 3; ++i)
+                    for (var i = 0; i < AreaLineCount; ++i)
                     {
                         var areaTarget = areaRow.Where(area => area.Lines.ElementAt(i).All(c => !c.Hypotheses.Contains(value)));
                         if (areaTarget.Count() == AreaLineCount - 1)
@@ -291,7 +295,7 @@ namespace ProjetCsWpf
 
                 foreach (var areaColumn in AreaColumns)
                 {
-                    for (var i = 0; i < 3; ++i)
+                    for (var i = 0; i < AreaLineCount; ++i)
                     {
                         var areaTarget = areaColumn.Where(area => area.Columns.ElementAt(i).All(c => !c.Hypotheses.Contains(value)));
                         if (areaTarget.Count() == AreaLineCount - 1)
@@ -315,9 +319,121 @@ namespace ProjetCsWpf
 
         public void GroupeIsoles()
         {
-            
+/*            foreach (var _values in PossibleValues.CartesianProduct(AreaLineCount))
+            {
+                var values = _values.ToArray();
+                Debug.WriteLine("values : " + values.Select(v => v.ToString()).Aggregate((c,n) => c + ", " + n));
+                foreach (var groupe in AllGroups)
+                {
+                    Debug.WriteLine("group : " + groupe.GetString());
+                    var test = from cell in groupe
+                               where !cell.Hypotheses.Except(values).Any()
+                               select cell;
+
+                    if (test.Count() == AreaLineCount)
+                    {
+                        foreach (var toEmpty in groupe.Except(test))
+                        {
+                            foreach (var value in values)
+                            {
+                                toEmpty.Remove(value);
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
+            foreach (var groupe in AllGroups)
+            {
+                foreach (var cell in groupe)
+                {
+                    var sub = from c in groupe
+                        where !c.Hypotheses.Except(cell.Hypotheses).Any()
+                        select c;
+                    if (sub.Count() == cell.Hypotheses.Count())
+                    {
+                        foreach (var toEmpty in groupe.Except(sub))
+                        {
+                            foreach (var value in cell.Hypotheses.ToArray())
+                            {
+                                toEmpty.Remove(value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Burma()
+        {
+            foreach (var value in PossibleValues)
+            {
+                Debug.WriteLine("value : " + value);
+                for (var nbColone = PossibleValues.Length; nbColone > 0; --nbColone)
+                {
+                    for(var nbValue = nbColone; nbValue > 0; --nbValue)
+                    {
+                        Debug.WriteLine("n : " + nbColone);
+                        Debug.WriteLine("c : " + nbValue);
+
+                        {
+                            Debug.WriteLine("column...");
+                            var columns = from coumn in Columns
+                                           where coumn.Count(cell => cell.Hypotheses.Contains(value)) == nbValue
+                                           select coumn;
+                             var rows = columns.SelectMany(column => column.Select(cell => cell.Y))
+                                               .Distinct()
+                                               .Select(x => Lines.ElementAt(x));
+                            if (columns.Count() == rows.Count() && columns.Count() == nbColone &&
+                                rows.All(row => row.Count(cell => cell.Hypotheses.Contains(value)) == nbValue))
+                                //can remove
+                            {
+                                Debug.WriteLine("found : " + columns.Aggregate("",(c,n) => c + "|" + n.GetString()));
+                                Debug.WriteLine("remove at : " + rows.Aggregate("", (c, n) => c + "|" + n.GetString()));
+                                foreach (var cell in rows.SelectMany(row => cells.Except(columns.SelectMany(c => c))))
+                                    cell.Remove(value);                                
+                            }
+                        }
+                        {
+                            Debug.WriteLine("row...");
+
+                             var rows = from line in Lines
+                                        where line.Count(cell => cell.Hypotheses.Contains(value)) < nbColone
+                                        select line;
+                             var columns = rows.SelectMany(column => column.Select(cell => cell.X))
+                                               .Distinct()
+                                               .Select(y => Lines.ElementAt(y));
+                             if (rows.Count() != columns.Count() || rows.Count() != nbColone && columns.All(colunm => colunm.Count(cell => cell.Hypotheses.Contains(value)) == nbValue))   //can remove
+                             {
+                                 Debug.WriteLine("found : " + rows.Aggregate("", (c, n) => c + "|" + n.GetString()));
+                                 Debug.WriteLine("remove at : " + columns.Aggregate("", (c, n) => c + "|" + n.GetString()));
+                                 foreach (var cell in columns.SelectMany(row => cells.Except(rows.SelectMany(c => c))))
+                                     cell.Remove(value);
+                             }
+
+                        }
+                    }
+                }
+            }
+            foreach (var value in PossibleValues)
+            {
+                var t = from line in Lines
+                        where line.Any(cell => cell.Hypotheses.Contains(value))
+                        select line.Where(cell => cell.Hypotheses.Contains(value));
+                var ts = from line in t
+                         from line2 in t
+                         where line.Count() == 2
+                            && line.First().X == line.ElementAt(2).X
+                        select line;
+                foreach (var group in AllGroups.Where(g => g.Any(c => c.Hypotheses.Contains(value))))
+                {
+                    //on a tout les groupes qui conti
+                }
+            }
         }
     }
+
+
     public class InvalidGrilleException : Exception {
         public InvalidGrilleException(string message)
             : base(message) { }

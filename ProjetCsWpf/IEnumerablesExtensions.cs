@@ -50,6 +50,24 @@ namespace ProjetCsWpf
             return source.Select(line => line.ToArray()).ToArray();
         }
 
+        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(this IEnumerable<T> source, int size)
+        {
+            var enumerators = new IEnumerator<T>[size];
+            for (var i = 0; i < size; ++i)
+            {
+                enumerators[i] = source.GetEnumerator();
+                enumerators[i].MoveNext();
+            }
+            for (var i = 0; true; ++i)
+            {
+                yield return enumerators.Select(e => e.Current);
+                if (!enumerators[i].MoveNext())
+                    yield break;
+                if (i == size - 1)
+                    i = 0;
+            }
+        }
+
         public static string GetString(this IEnumerable<Case> source)
         {
             return source.Aggregate("", (c, n) => c + string.Format("({1},{2}) -> {0};", (n.Resolved ?  n.Value.ToString() : n.Hypotheses.Aggregate("",(cur,nex) => cur+ ","+nex)),n.X,n.Y));

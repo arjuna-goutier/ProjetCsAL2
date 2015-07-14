@@ -27,7 +27,7 @@
         </Grid>
         <StackPanel Grid.Column="0" Grid.Row="0">
             <Button Content="Selectionner fichier" Click="ButtonBase_OnClick"></Button>
-            <Button Content="Tout Résoudre" />
+            <Button Content="Tout Résoudre" Click="BtnResoleAll_OnCLick"/>
             <Label Content="{Binding FileName}"></Label>
         </StackPanel>
         <Grid Grid.Column="1">
@@ -45,6 +45,7 @@
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="{Binding SelectedSudoku.Name}"></Label>
                 <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedSudoku.CreationDate}"></Label>
@@ -53,6 +54,8 @@
                 <Button Grid.Row="1" Grid.Column="1" Content="Candidat unique" Click="Button_Click_1"></Button>
                 <Button Grid.Row="1" Grid.Column="2" Content="Jumeaux" Click="Btn_Trouver_Jumeaux_Click" ></Button>
                 <Button Grid.Row="1" Grid.Column="3" Content="Interaction" Click="Btn_Trouver_Interaction_Click" ></Button>
+                <Button Grid.Row="1" Grid.Column="4" Content="Groupe isolés" Click="Btn_Trouver_GroupeIsole_Click" ></Button>
+                <Button Grid.Row="1" Grid.Column="4" Content="Burma" Click="Btn_Burma_Click" ></Button>
             </Grid>
             <Grid Name="FrontGrille" Grid.Row="1">
                 <!--on affiche la grille ici-->
