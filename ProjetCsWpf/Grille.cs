@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -22,37 +23,57 @@ namespace ProjetCsWpf
             }
         }
 
-        private IEnumerable<CellGroup> lines {
+        private IEnumerable<CellGroup> Lines {
             get {
                 return from cell in cells
-                       group cell by cell.X into line
+                       group cell by cell.Y into line
                        select new CellGroup(line);
             }
         }
-        private IEnumerable<CellGroup> columns {
+        private IEnumerable<CellGroup> Columns {
             get
             {
                 return from cell in cells
-                       group cell by cell.Y
+                       group cell by cell.X
                        into column
                        select new CellGroup(column);
                 /*for (var i = 0; i < Content[0].Length; ++i)
                     yield return new CellGroup(Content.Select(line => line.ElementAt(i)).ToArray());*/
             }
         }
-        private IEnumerable<CellGroup> areas {
+        private IEnumerable<CellGroup> Areas {
             get {
-                var areaLength = (int) Math.Sqrt(Content.Length);
-                var regions= new Matrix<List<Case>>(areaLength,areaLength,() => new List<Case>(Content.Length));
-                for(var y = 0 ; y < Content.Count() ; ++y)
-	                for(var x = 0 ; x < Content[y].Count() ; ++x)
-                        regions.Values[x / areaLength, y / areaLength].Add(Content[y][x]);
-                return regions.Select(cells => new CellGroup(cells));
+                return from cell in cells
+                       group cell by new {
+                           x = cell.X / AreaLineCount, 
+                           y = cell.Y / AreaLineCount,
+                       } into area
+                       select new CellGroup(area);
             }
         }
-        private IEnumerable<CellGroup> allGroups {
+        private IEnumerable<IEnumerable<CellGroup>> AreaLines
+        {
+            get
+            {
+                return from area in Areas
+                       group area by area.First().Y / AreaLineCount into areaLine
+                       select areaLine;
+            }
+        }
+
+        private IEnumerable<IEnumerable<CellGroup>> AreaColumns
+        {
+            get
+            {
+                return from area in Areas
+                       group area by area.First().X / AreaLineCount into areaColumn
+                       select areaColumn;
+            }
+        }
+
+        private IEnumerable<CellGroup> AllGroups {
             get {
-                return lines.Concat(columns).Concat(areas);
+                return Lines.Concat(Columns).Concat(Areas);
             }
         }
         public bool Resolved {
@@ -62,7 +83,7 @@ namespace ProjetCsWpf
         }
         public bool IsValid {
             get {
-                return allGroups.All((group) => group.IsValid);
+                return AllGroups.All((group) => group.IsValid);
             }
         }
         public IEnumerable<Case> Resolveds()
@@ -108,7 +129,7 @@ namespace ProjetCsWpf
 
         // si une region n'a qu'une hypothese possible, on la retire
         public void RetirerCandidatsUniques() {
-            foreach (var groupe in allGroups) {
+            foreach (var groupe in AllGroups) {
                 foreach (var p in PossibleValues) {
                     var cellulePossible = (from cell in groupe
                                           where cell.Hypotheses.Contains(p) 
@@ -122,7 +143,7 @@ namespace ProjetCsWpf
 
         public void UnSeulCandidat()
         {
-            foreach (var groupe in allGroups)
+            foreach (var groupe in AllGroups)
             {
                 //only one cell possible for a value
                 foreach (var value in PossibleValues)
@@ -139,35 +160,16 @@ namespace ProjetCsWpf
             }
         }
 
-        private IEnumerable<IEnumerable<CellGroup>> AreaRows
-        {
-            get
-            {
-                return from area in areas
-                       group area by area.First().X / AreaLineCount into areaLine
-                       select areaLine;
-            }
-        }
-
-        private IEnumerable<IEnumerable<CellGroup>> AreaColumns
-        {
-            get
-            {
-                return from area in areas
-                       group area by area.First().X / AreaLineCount into areaColumn
-                       select areaColumn;
-            }
-        }
 
         private IEnumerable<CellGroup> AreaAtRow(int i)
         {
-            return  from area in areas
-                    where area.First().X/AreaLineCount == i
+            return  from area in Areas
+                    where area.First().Y / AreaLineCount == i
                     select area;
         }
         private IEnumerable<CellGroup> AreaAtColumn(int i)
         {
-            return from area in areas
+            return from area in Areas
                    where area.First().X / AreaLineCount == i
                    select area;
         }
@@ -176,10 +178,10 @@ namespace ProjetCsWpf
                 //if a value is only in a line or column
             foreach (var value in PossibleValues)
             {
-                Console.WriteLine("value : {0}", value);
-                foreach (var area in areas)
+                Debug.WriteLine("value : {0}", value);
+                foreach (var area in Areas)
                 {
-                    Console.WriteLine("area {0}",area);
+                    Debug.WriteLine("area {0}",area);
                     var lineWithValue = (
                         from line in area.Lines
                         where line.Any(c => c.Hypotheses.Contains(value))
@@ -192,12 +194,13 @@ namespace ProjetCsWpf
                         continue;
                     if (lineWithValue.Count() == 1)
                     {
-                        Console.WriteLine("Found line {0}",lineWithValue.First().First().X);
-                        foreach (var cell in lines
+                        Debug.WriteLine("line has jumeaux : " + lineWithValue.First().GetString());
+                        Debug.WriteLine("Found line {0}",lineWithValue.First().First().Y);
+                        foreach (var cell in Lines
                                                 .ElementAt(lineWithValue
                                                                 .First()
                                                                 .First()
-                                                                .X)
+                                                                .Y)
                                                 .Where(c => !area.Contains(c)))
                         {
                             cell.Remove(value);
@@ -205,12 +208,13 @@ namespace ProjetCsWpf
                     }
                     if (columnWithValue.Count() == 1)
                     {
-                        Console.WriteLine("Found colulms {0}",  columnWithValue.First().First().Y);
-                        foreach (var cell in columns
+                        Debug.WriteLine("column has jumeaux : " + columnWithValue.First().GetString());
+                        Debug.WriteLine("Found colulms {0}", columnWithValue.First().First().X);
+                        foreach (var cell in Columns
                             .ElementAt(columnWithValue
                                             .First()
                                             .First()
-                                            .Y)
+                                            .X)
                             .Where(c => !area.Contains(c)))
                         {
                             cell.Remove(value);
@@ -218,7 +222,7 @@ namespace ProjetCsWpf
                     }
                 }
             }
-            Console.WriteLine("end of function");
+            Debug.WriteLine("end of function");
         }
 
         public IEnumerable<Case> ConcernedCells(int x, int y)
@@ -260,22 +264,58 @@ namespace ProjetCsWpf
         {
             foreach (var value in PossibleValues)
             {
-                foreach (var areaRow in AreaRows)
+                Debug.WriteLine("value : " + value);
+                foreach (var areaRow in AreaLines)
                 {
-                    var h = from area in areaRow
-                            where area.Lines.Count(l => ! l.Any(c => c.Hypotheses.Contains(c.Value))) == 1
-                            select area;
-                    
-                    if (h.Count() == AreaLineCount - 1)
+                    for (var i = 0; i < 3; ++i)
                     {
+                        var areaTarget = areaRow.Where(area => area.Lines.ElementAt(i).All(c => !c.Hypotheses.Contains(value)));
+                        if (areaTarget.Count() == AreaLineCount - 1)
+                        {
+                            var toEmpty = areaRow.Except(areaTarget).First();
+                            Debug.WriteLine("lines : ");
+                            foreach (var l in toEmpty.Lines)
+                            {
+                                Debug.WriteLine(l.GetString());
+                            }
+                            Debug.WriteLine("to empty(row) : " + toEmpty);
+                            Debug.WriteLine("line : " + i);
+                            Debug.WriteLine("except(row) : " + toEmpty.Lines.ElementAt(i).GetString());
+                            foreach (var cell in toEmpty.Except(toEmpty.Lines.ElementAt(i)))
+                            {
+                                cell.Remove(value);
+                            }
+                        }
                     }
                 }
 
                 foreach (var areaColumn in AreaColumns)
                 {
+                    for (var i = 0; i < 3; ++i)
+                    {
+                        var areaTarget = areaColumn.Where(area => area.Columns.ElementAt(i).All(c => !c.Hypotheses.Contains(value)));
+                        if (areaTarget.Count() == AreaLineCount - 1)
+                        {
 
+                            var toEmpty = areaColumn.Except(areaTarget).First();
+
+                            Debug.WriteLine("to empty(column) : " + toEmpty);
+                            Debug.WriteLine("except(column) : " + toEmpty.Columns.ElementAt(i).GetString());
+                            Debug.WriteLine("column : " + i);
+
+                            foreach (var cell in toEmpty.Except(toEmpty.Columns.ElementAt(i)))
+                            {
+                                cell.Remove(value);
+                            }
+                        }
+                    }
                 }
             }
+        }
+
+        public void GroupeIsoles()
+        {
+            
         }
     }
     public class InvalidGrilleException : Exception {

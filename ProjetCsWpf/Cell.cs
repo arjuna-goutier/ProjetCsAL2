@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ProjetCsWpf
@@ -16,7 +17,7 @@ namespace ProjetCsWpf
             }
             set
             {
-                Console.WriteLine("({0},{1}) = {2}", X, Y, Value);
+                Debug.WriteLine("({0},{1}) = {2}", X, Y, Value);
                 var hypotheses = Hypotheses;
                 Hypotheses = new HashSet<char>() { value };
                 Grille.PropagerCertitudes(value, X, Y);
@@ -33,12 +34,12 @@ namespace ProjetCsWpf
         public void Remove(char c) {
             if (Resolved)
                 return;
-            Console.WriteLine("({0},{1}) : ~{2}", X,Y,c);
+            Debug.WriteLine("({0},{1}) : ~{2}", X,Y,c);
             Hypotheses.Remove(c);
             //si retirer ça nous permet de résoudre, on le dit a la grille
             if (Resolved)
             {
-                Console.WriteLine("({0},{1}) -> {2}",X,Y,Value);
+                Debug.WriteLine("({0},{1}) -> {2}",X,Y,Value);
                 Grille.PropagerCertitudes(Value, X, Y);                
             }
         }

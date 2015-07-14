@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,8 +82,8 @@ namespace ProjetCsWpf
                                         ? Brushes.Black
                                         : Brushes.Red
                     };
-                    Grid.SetColumn(text, i);
-                    Grid.SetRow(text, j);
+                    Grid.SetColumn(text, j);
+                    Grid.SetRow(text, i);
                     grid.Children.Add(text);
                 }
             }
@@ -91,6 +92,7 @@ namespace ProjetCsWpf
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (App.SudokuManager.SelectedSudoku == null) return;
+            Debug.WriteLine("__propagation__");
             App.SudokuManager.SelectedSudoku.PropagerCertitudes();
             DisplayGrid();
         }
@@ -98,6 +100,7 @@ namespace ProjetCsWpf
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (App.SudokuManager.SelectedSudoku == null) return;
+            Debug.WriteLine("__un seul candidat__");
             App.SudokuManager.SelectedSudoku.UnSeulCandidat();
             DisplayGrid();
         }
@@ -105,6 +108,7 @@ namespace ProjetCsWpf
         private void Btn_Trouver_Jumeaux_Click(object sender, RoutedEventArgs e)
         {
             if (App.SudokuManager.SelectedSudoku == null) return;
+            Debug.WriteLine("__jumeaux__");
             App.SudokuManager.SelectedSudoku.TrouverJumeaux();
             DisplayGrid();
         }
@@ -112,6 +116,7 @@ namespace ProjetCsWpf
         private void Btn_Trouver_Interaction_Click(object sender, RoutedEventArgs e)
         {
             if (App.SudokuManager.SelectedSudoku == null) return;
+            Debug.WriteLine("__interaction__");
             App.SudokuManager.SelectedSudoku.TrouverInteraction();
             DisplayGrid();
         }

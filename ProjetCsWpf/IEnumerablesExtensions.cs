@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjetCsWpf
@@ -47,6 +48,11 @@ namespace ProjetCsWpf
 
         public static T[][] ToArrayArray<T>(this IEnumerable<IEnumerable<T>> source) {
             return source.Select(line => line.ToArray()).ToArray();
+        }
+
+        public static string GetString(this IEnumerable<Case> source)
+        {
+            return source.Aggregate("", (c, n) => c + string.Format("({1},{2}) -> {0};", (n.Resolved ?  n.Value.ToString() : n.Hypotheses.Aggregate("",(cur,nex) => cur+ ","+nex)),n.X,n.Y));
         }
     }
 }

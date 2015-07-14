@@ -11,9 +11,9 @@ namespace ProjetCsWpf
         {
             get
             {
-                return from c in cells
-                       group c by c.Y into cell
-                       select cell;
+                return from cell in cells
+                       group cell by cell.X into column
+                       select column;
             }
         }
 
@@ -21,14 +21,15 @@ namespace ProjetCsWpf
         {
             get
             {
-                return from c in cells
-                       group c by c.X into cell
-                       select cell;                
+                return from cell in cells
+                       group cell by cell.Y into line
+                       select line;                
             }
         }
         public CellGroup(IEnumerable<Case> cells) {
             this.cells = cells;
         }
+
         public CellGroup(params Case[] cells):this(cells as IEnumerable<Case>) {
         }
 
@@ -39,8 +40,10 @@ namespace ProjetCsWpf
                             .UniqueValues(new CellValueComparator());
             }
         }
-        public override string ToString() {
-            return cells.Aggregate("",(s,cell) => s + string.Format("({1},{2}) -> {0};",(cell.Resolved ?  cell.Value.ToString() : cell.Hypotheses.Aggregate("",(c,n) => c+ ","+n)),cell.X,cell.Y));
+        public override string ToString()
+        {
+            return cells.GetString();
+            //cells.Aggregate("",(s,cell) => s + string.Format("({1},{2}) -> {0};",(cell.Resolved ?  cell.Value.ToString() : cell.Hypotheses.Aggregate("",(c,n) => c+ ","+n)),cell.X,cell.Y));
         }
 
         public IEnumerator<Case> GetEnumerator()
