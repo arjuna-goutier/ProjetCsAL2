@@ -1,0 +1,28 @@
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\bin\Debug\ProjetCsWpf.exe.config
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf.csprojResolveAssemblyReference.cache
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\MainWindow.baml
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\MainWindow.g.cs
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\App.g.cs
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf_Content.g.cs
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf_MarkupCompile.cache
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf.g.resources
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf.Properties.Resources.resources
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf.csproj.GenerateResource.Cache
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\bin\Debug\ProjetCsWpf.exe
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\bin\Debug\ProjetCsWpf.pdb
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf.exe
+c:\users\moi\documents\visual studio 2013\Projects\ProjetCsWpf\ProjetCsWpf\obj\Debug\ProjetCsWpf.pdb
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\bin\Debug\ProjetCsWpf.exe.config
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.exe
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.pdb
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\bin\Debug\ProjetCsWpf.exe
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\bin\Debug\ProjetCsWpf.pdb
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.csprojResolveAssemblyReference.cache
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\MainWindow.baml
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\MainWindow.g.cs
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\App.g.cs
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf_Content.g.cs
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf_MarkupCompile.cache
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.g.resources
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.Properties.Resources.resources
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.csproj.GenerateResource.Cache

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ProjetCsWpf.IEnumerablesExtensions">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="ProjetCsWpf.IEnumerablesExtensions.Condition&lt;T&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>IEnumerablesExtensions.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAABCAAAAABgAAAAAAQ=</HashCode>
+      <FileName>IEnumerablesExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetCsWpf.SudokuReader">
+    <Position X="2.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABABAAEAGEAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>SudokuReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
