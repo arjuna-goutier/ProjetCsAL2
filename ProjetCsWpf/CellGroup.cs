@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ProjetCsWpf
 {
-    class CellGroup:IEnumerable<Case>
+    public class CellGroup:IEnumerable<Case>
     {
         private readonly IEnumerable<Case> cells;
 

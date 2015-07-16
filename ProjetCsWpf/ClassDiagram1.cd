@@ -10,15 +10,15 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAABCAAAAABgAAAAAAQ=</HashCode>
+      <HashCode>gAAAAAAAAEAAAAAAAAAAFAAARAABCAAAAABgAAAACAQ=</HashCode>
       <FileName>IEnumerablesExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProjetCsWpf.SudokuReader">
+  <Class Name="ProjetCsWpf.SudokuFile">
     <Position X="2.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABABAAEAGEAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
-      <FileName>SudokuReader.cs</FileName>
+      <HashCode>AAAAAAAAAAABABAAAAGEAAAgAAAAAAgAAAAAIAEACAA=</HashCode>
+      <FileName>SudokuFile.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

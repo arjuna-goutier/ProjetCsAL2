@@ -21,11 +21,16 @@ namespace ProjetCsWpf
         public void GetFiles(string path)
         {
             Sudokus.Clear();
-            foreach (var sudoku in SudokuReader.ReadAll(path))
+            foreach (var sudoku in SudokuFile.Read(path))
             {
                 Sudokus.Add(sudoku);
             }
             FileName = path;
+        }
+
+        public void SaveFile(string path)
+        {
+            SudokuFile.Write(path, Sudokus);
         }
     }
 
@@ -35,7 +40,7 @@ namespace ProjetCsWpf
         public string Title { get; private set; }
         public DateTime Date { get; private set; }
         public ObservableCollection<ObservableCollection<char>> Values { get; private set; }
-        public ObservableCollection<char> PossiblesValues { get; set; } 
+        public ObservableCollection<char> PossiblesValues { get; set; }
         public SudokuViewModel(string name, string title, DateTime date)
         {
             Name = name;

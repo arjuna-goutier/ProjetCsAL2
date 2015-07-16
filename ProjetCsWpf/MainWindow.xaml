@@ -1,23 +1,42 @@
 ﻿<Window x:Class="ProjetCsWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding Title}" Height="350" Width="525">
+        xmlns:projetCsWpf="clr-namespace:ProjetCsWpf"
+        Title="{Binding SelectedSudoku.Name}" Height="350" Width="525">
+    <Window.Resources>
+        <projetCsWpf:StateToColorConverter x:Key="ColorConverter" />
+        <projetCsWpf:NullToBoolInverseConverter x:Key="NullConverter" />
+        <projetCsWpf:ListEmptyToBool x:Key="EmtpyConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+
+        <Grid Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
+            <Button Grid.Row="0" Background="DeepSkyBlue" Content="Selectionner fichier" Click="ButtonBase_OnClick"></Button>
+            <Button Grid.Row="1" Background="DeepSkyBlue" Content="Sauvegarder" Click="BtnSave_OnCLick" IsEnabled="{Binding Sudokus, Converter={StaticResource EmtpyConverter}}" Name="BtnSave"/>
+            <Button Grid.Row="2" Background="DeepSkyBlue" Content="Tout Résoudre" Click="BtnResoleAll_OnCLick" IsEnabled="{Binding Sudokus, Converter={StaticResource EmtpyConverter}}" Name="BtnResolveAll"/>
+            <Button Grid.Row="3" Background="DeepSkyBlue" Content="Résoudre" Click="BtnResolve_OnCLick" IsEnabled="{Binding SelectedSudoku, Converter={StaticResource NullConverter}}"/>
             <ListBox 
                 Name="LbxSudokus"
-                Grid.Row="1" 
+                Grid.Row="4" 
                 ItemsSource="{Binding Sudokus}"
                 SelectedItem="{Binding SelectedSudoku}"
                 SelectionChanged="LbxSudokus_OnSelectionChanged">
+                <ListBox.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="ItemsControl.Background" Value="{Binding Converter={StaticResource ColorConverter}}"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Label Content="{Binding Name}"></Label>
@@ -25,44 +44,53 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <StackPanel Grid.Column="0" Grid.Row="0">
-            <Button Content="Selectionner fichier" Click="ButtonBase_OnClick"></Button>
-            <Button Content="Tout Résoudre" Click="BtnResoleAll_OnCLick"/>
-            <Label Content="{Binding FileName}"></Label>
-        </StackPanel>
-        <Grid Grid.Column="1">
+        <!--<Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"></RowDefinition>
-                    <RowDefinition Height="5*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="{Binding SelectedSudoku.Name}"></Label>
-                <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedSudoku.CreationDate}"></Label>
-                <Label Grid.Row="0" Grid.Column="2" Content="{Binding SelectedSudoku.PossibleValues}"></Label>
+                <ProgressBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"></ProgressBar>
                 <Button Grid.Row="1" Grid.Column="0" Content="Propagation" Click="Button_Click"></Button>
                 <Button Grid.Row="1" Grid.Column="1" Content="Candidat unique" Click="Button_Click_1"></Button>
                 <Button Grid.Row="1" Grid.Column="2" Content="Jumeaux" Click="Btn_Trouver_Jumeaux_Click" ></Button>
                 <Button Grid.Row="1" Grid.Column="3" Content="Interaction" Click="Btn_Trouver_Interaction_Click" ></Button>
                 <Button Grid.Row="1" Grid.Column="4" Content="Groupe isolés" Click="Btn_Trouver_GroupeIsole_Click" ></Button>
-                <Button Grid.Row="1" Grid.Column="4" Content="Burma" Click="Btn_Burma_Click" ></Button>
+                <Button Grid.Row="1" Grid.Column="5" Content="Burma" Click="Btn_Burma_Click" ></Button>
+                <Button Grid.Row="1" Grid.Column="6" Content="Groupe unique" Click="Btn_Groupe_Unique_Click" />
+                <Button Grid.Row="1" Grid.Column="7" Content="XY Wing" Click="Btn_XY_WING_Click" />
+                <Button Grid.Row="1" Grid.Column="8" Content="Force Brute" Click="Btn_Brute_Click" Grid.RowSpan="2" />
             </Grid>
             <Grid Name="FrontGrille" Grid.Row="1">
-                <!--on affiche la grille ici-->
+                --><!--on affiche la grille ici--><!--
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
             </Grid>
+        </Grid>-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="15"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!--on affiche la grille ici-->
+            <Grid Grid.Row="0" Name="FrontGrille"></Grid>
+            <TextBlock Name="TxtSolvingTime"  Grid.Row="1" Text="{Binding SelectedSudoku.SolvingTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
         </Grid>
     </Grid>
 </Window>

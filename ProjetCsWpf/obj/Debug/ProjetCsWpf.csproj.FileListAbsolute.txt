@@ -26,3 +26,5 @@ C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug
 C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.g.resources
 C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.Properties.Resources.resources
 C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf.csproj.GenerateResource.Cache
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Moi\Desktop\ProjetCsAL2-master\ProjetCsAL2-master\ProjetCsWpf\obj\Debug\ProjetCsWpf_MarkupCompile.lref

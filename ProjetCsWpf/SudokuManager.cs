@@ -9,7 +9,7 @@ namespace ProjetCsWpf
             try {
                 Console.WriteLine("Enter the file's path : ");
                 var path = Console.ReadLine();
-                foreach (var grille in SudokuReader.ReadAll(path))
+                foreach (var grille in SudokuFile.Read(path))
                     Console.WriteLine("{0} is {1}", grille.Name, grille.IsValid ? "valid" : "not valid");
             }
             catch (Exception e) {
@@ -22,7 +22,7 @@ namespace ProjetCsWpf
                 Console.WriteLine("Enter the file's path : ");
                 var path = @"C:\Users\Moi\Desktop\Sudokus.sud"; //Console.ReadLine();
 
-                foreach (var grille in SudokuReader.ReadAll(path))
+                foreach (var grille in SudokuFile.Read(path))
                 {
                     grille.Resolve();
                     Console.WriteLine(grille);
