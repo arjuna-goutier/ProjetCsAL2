@@ -176,22 +176,25 @@ namespace ProjetCsWpf
             if (Resolved || !IsValid) return;
             
             PropagerCertitudes();
-            for (var i = 0; i < 3 && !Resolved; ++i)
+            for (var i = 0; i < 5 && !Resolved; ++i)
             {
                 if (Resolved || !IsValid) return;
                 //algo rapide, on peut les utiliser souvent
-                for (var j = 0; i < 5; ++i)
+                for (var j = 0; j < 5; ++j)
                 {
                     UnSeulCandidat();
                     TrouverJumeaux();
                     TrouverInteraction();
                     GroupeIsoles();
+                    if (Resolved || !IsValid) return;
                 }
                 if (Resolved || !IsValid) return;
                 //algo longt, on evite de les utiliser quand c'est pas nessecaire
                 UniqueGroup();
                 Burma();
+                XYWing();
             }
+            if (Resolved || !IsValid) return;
             ForceBrute();
         }
         
@@ -220,20 +223,6 @@ namespace ProjetCsWpf
                     }
                 }
             }
-        }
-
-
-        private IEnumerable<CellGroup> AreaAtRow(int i)
-        {
-            return  from area in Areas
-                    where area.First().Y / AreaLineCount == i
-                    select area;
-        }
-        private IEnumerable<CellGroup> AreaAtColumn(int i)
-        {
-            return from area in Areas
-                   where area.First().X / AreaLineCount == i
-                   select area;
         }
 
         public void TrouverJumeaux() {
